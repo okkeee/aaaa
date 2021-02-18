@@ -1,0 +1,76 @@
+移すもとになる
+
+配列Y[元データ行分]
+
+移す先の
+
+'配列X[元データ行分＊想定している特約店コード数 2]これをn
+
+
+n = 2
+
+'i元データの行数
+for i = 0 to 元データ行分
+
+
+'y⇒xに移植する処理 回数　j
+for j = 0 to 1
+
+X(j,0)=Y(i,0) 'ref
+X(j,1)=Y(i,1) '契約連番
+X(j,2)=Y(i,2+j) 'コード
+X(j,3)=Y(i,4+j) '社名
+
+X(j+(n*i),0)=Y(i,0) 'ref
+X(j+(n*i),1)=Y(i,1) '契約連番
+X(j+(n*i),2)=Y(i,2+j) 'コード
+X(j+(n*i),3)=Y(i,4+j) '社名
+
+
+next
+
+
+next i
+
+
+
+Sub sample()
+  Dim Y(0 To 20, 0 To 20) As String
+
+  For i = 0 To UBound(Y)
+            zouka = zouka + i
+            If IsNumeric(Cells(i + 2, 3)) Then
+                s = Split(Cells(i + 2, 3), "，")
+                s1 = Split(Cells(i + 2, 4), "，")
+                If UBound(s) = 2 Then
+                    Y(i, 2) = s(0)
+                    Y(i, 3) = s(1)
+                    Y(i, 8) = s1(0)
+                    Y(i, 9) = s1(1)
+                ElseIf UBound(s) = 3 Then
+                    Y(i, 2) = s(0)
+                    Y(i, 3) = s(1)
+                    Y(i, 4) = s(2)
+                    Y(i, 8) = s1(0)
+                    Y(i, 9) = s1(1)
+                    Y(i, 10) = s1(1)
+                End If
+            End If
+            Y(i + zouka, 0) = Cells(i + 2, i + 1).Value
+            Y(i + zouka, 1) = Cells(i + 2, i + 2).Value
+            Y(i + zouka, 14) = Cells(i + 2, i + 3).Value
+            Y(i + zouka, 15) = Cells(i + 2, i + 4).Value
+            Y(i + zouka, 16) = Cells(i + 2, i + 5).Value
+        Next i
+End Sub
+
+
+
+ref	契約連番	特約店コード１	特約店名１	特約店コード２	特約店名２
+1	3302521371	，，1457629，1457629，	，，株式会社　八雲堂，株式会社　八雲堂，	1263345，1263345，1263345，1263345，	
+2	0000060002		，	'1263345，	
+3	0002032009	'，，	，，	'1263511，1263511，	
+4	0002144001	'，，	，，	'1258471，1258471，	
+
+
+
